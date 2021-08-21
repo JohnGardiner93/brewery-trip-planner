@@ -1,0 +1,11 @@
+{
+  "name": "brewery-trip-planner",
+  "version": "1.0.0",
+  "description": "Application designed to help a user plan a trip to visit breweries in their area.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John Gardiner",
+  "license": "ISC"
+}
