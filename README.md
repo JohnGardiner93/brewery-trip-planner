@@ -6,13 +6,13 @@ This is a project of my own design. The long-term objective is to provide inform
 
 ## 📑 Table of Contents
 
-- [Part 1](#part-1-async--apis)
-  - [Description](#description)
-  - [Requirements](#requirements)
-  - [Usage](#usage)
-- [Part 2](#part-2-client-side-elements)
-- [Part 3](#part-3-itinerary-planning)
-- [Installation](#installation)
+- [Part 1](#-part-1-async--apis)
+  - [Description](#-description)
+  - [Requirements](#-requirements)
+  - [Usage](#-usage)
+- [Part 2](#-part-2-client-side-elements)
+- [Part 3](#-part-3-itinerary-planning)
+- [Installation](#-installation)
 
 # 🔎 Part 1: Async & API's
 
