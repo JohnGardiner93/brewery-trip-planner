@@ -44,4 +44,4 @@ Long-term, information regarding the taplist at locations of interest would be i
 
 # 🚀 Installation
 
-Use npm to nodemon (or whatever server-hosting method you prefer).
+Use npm to insall inquirer and nodemon (or whatever server-hosting method you prefer).
