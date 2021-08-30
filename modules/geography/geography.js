@@ -18,7 +18,7 @@ exports.getTownsAndCities = async function (state) {
   try {
     // Search
     const stateCode = await getStateCode(state);
-    const searchURL = `https://public.opendatasoft.com/api/v2/catalog/datasets/cities-and-towns-of-the-united-states/exports/json?select=include(name)%2C%20include(state)%2C%20include(longitude)%2C%20include(latitude)%2C%20include(county)&limit=-1&refine=state%3A${stateCode}&pretty=false&timezone=UTC`;
+    const searchURL = `https://public.opendatasoft.com/api/v2/catalog/datasets/cities-and-towns-of-the-united-states/exports/json?select=include(name)%2C%20include(state)%2C%20include(longitude)%2C%20include(latitude)%2C%20include(county)&order_by=name%20asc&limit=-1&refine=state%3A${stateCode}&pretty=false&timezone=UTC`;
     const results = await superagent.get(searchURL);
 
     // Save search results for debug. Non-blocking.
@@ -62,7 +62,7 @@ const getStateCode = async function (state) {
  * @returns {Promise<String[]>} - Promise representing Array of city and town names.
  */
 const compileTownAndCityList = async function (data) {
-  const list = data.map((area) => area.name).sort();
+  const list = data.map((area) => area.name);
   return list;
 };
 
