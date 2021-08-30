@@ -1,9 +1,13 @@
 ////////////////////////////////////////////
 // Modules
+const fs = require("fs");
 const inquirer = require("inquirer");
+const superagent = require("superagent");
 const fuzzy = require("fuzzy");
+const stringifyJSON = require("./modules/my-utils/stringifyJSONPro");
 const geography = require("./modules/geography/geography");
 const { states } = require("./data/stateList.json");
+const slugify = require("slugify");
 
 ////////////////////////////////////////////
 // Functions
@@ -17,14 +21,14 @@ const { states } = require("./data/stateList.json");
  */
 const getLocationInput = async function (message, inputOptions) {
   try {
-  const answer = await inquirer.prompt([
+    const answer = await inquirer.prompt([
       {
         type: "autocomplete",
         name: "result",
         message: `${message}`,
         source: (_, input) => searchList(input, inputOptions),
       },
-  ]);
+    ]);
     return answer.result;
   } catch (err) {
     throw new Error(`Problem with input function`);
@@ -81,17 +85,30 @@ const init = async function () {
     const cities = await geography.getTownsAndCities(state);
     console.log(`${cities.length} cities acquired!\n`, `------------------`);
     const city = await getLocationInput(`Select a city:`, cities);
-  console.log(city);
+    console.log(city);
+
+    const stateSlug = slugify(state, `_`);
+    const citySlug = slugify(city, `_`);
+    // Get brewery data
+    console.log(
+      `------------------\n`,
+      `Gathering brewery results for ${citySlug}...`
+    );
+    const breweryResults = await superagent.get(
+      `https://api.openbrewerydb.org/breweries?by_state=${stateSlug}&by_city=${citySlug}&sort=name:asc`
+    );
+
+    // Get weather data
+
+    console.log(breweryResults.body);
+    // Format brewery data
+
+    // Format weather data
+    // Store data
+    // Display data to user
   } catch (err) {
     console.log(err.message);
   }
-
-  // Get brewery and weather data simultaneously
-  // Format weather data
-  // Get brewery data
-  // Format brewery data
-  // Store data
-  // Display data to user
 };
 
 ////////////////////////////////////////////
