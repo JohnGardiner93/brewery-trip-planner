@@ -8,6 +8,7 @@ const stringifyJSON = require("./modules/my-utils/stringifyJSONPro");
 const geography = require("./modules/geography/geography");
 const { states } = require("./data/stateList.json");
 const slugify = require("slugify");
+require("dotenv").config();
 
 ////////////////////////////////////////////
 // Functions
@@ -79,6 +80,8 @@ const init = async function () {
   );
 
   try {
+    const APIkey = process.env.API_key;
+
     // Get User Input
     const state = await getLocationInput(`Select a state:`, states);
     console.log(`------------------\n`, `Gathering cities in ${state}...`);
@@ -99,8 +102,12 @@ const init = async function () {
     );
 
     // Get weather data
+    const weatherResults = await superagent.get(
+      `https://api.openweathermap.org/data/2.5/onecall?lat=37.8854129&lon=-76.6249557&exclude=minutely,alerts&appid=${APIkey}`
+    );
 
     console.log(breweryResults.body);
+    console.log(weatherResults.body);
     // Format brewery data
 
     // Format weather data
