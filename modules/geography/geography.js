@@ -25,7 +25,7 @@ exports.getTownsAndCities = async function (state) {
     saveSearchResults(results);
 
     // Compile relevant results into array
-    const list = await compileTownAndCityList(results.body);
+    const list = await restructureCityInformation(results.body);
     return list;
   } catch (err) {
     throw new Error(
@@ -56,17 +56,6 @@ const getStateCode = async function (state) {
 };
 
 /**
- * Condenses city and town objects into a list of their names without any extra information.
- * @async
- * @param {Object[]} data - The list of city and town objects.
- * @returns {Promise<String[]>} - Promise representing Array of city and town names.
- */
-const compileTownAndCityList = async function (data) {
-  const list = data.map((area) => area.name);
-  return list;
-};
-
-/**
  * Saves JSON to file.
  * @async
  * @param {Object[]} results - Response from web page with objects.
@@ -83,5 +72,31 @@ const saveSearchResults = async function (results) {
   } catch (err) {
     console.log(`File failed to write`);
     return -1;
+  }
+};
+
+/**
+ * Restructures data from list of objects to Map where the name of each city is a key whose value pair is an object containing the county, longitude, and latitude.
+ * @async
+ * @param {Object[]} apiCallResults - List of objects retrieved from API call.
+ * @returns {Map} Map of results. Keys = city names. Values contain city information.
+ */
+const restructureCityInformation = async function (apiCallResults) {
+  try {
+    const results = new Map();
+    apiCallResults.forEach((city) => {
+      // console.log(city);
+      const newObj = {};
+      newObj["county"] = city?.county;
+      newObj["longitude"] = city?.longitude;
+      newObj["latitude"] = city?.latitude;
+
+      if (!city.name)
+        throw new Error(`🏙 City Name does not exist. Data format incorrect.`);
+      results.set(city?.name, newObj);
+    });
+    return results;
+  } catch (err) {
+    throw err;
   }
 };

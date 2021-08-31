@@ -85,25 +85,25 @@ const init = async function () {
     // Get User Input
     const state = await getLocationInput(`Select a state:`, states);
     console.log(`------------------\n`, `Gathering cities in ${state}...`);
-    const cities = await geography.getTownsAndCities(state);
-    console.log(`${cities.length} cities acquired!\n`, `------------------`);
-    const city = await getLocationInput(`Select a city:`, cities);
-    console.log(city);
+    const cityData = await geography.getTownsAndCities(state);
+    console.log(`${cityData.size} cities acquired!\n`, `------------------`);
+    const cityName = await getLocationInput(`Select a city:`, [
+      ...cityData.keys(),
+    ]);
+
+    const { latitude, longitude } = cityData.get(cityName);
 
     const stateSlug = slugify(state, `_`);
-    const citySlug = slugify(city, `_`);
+    const citySlug = slugify(cityName, `_`);
     // Get brewery data
-    console.log(
-      `------------------\n`,
-      `Gathering brewery results for ${citySlug}...`
-    );
+    console.log(`------------------\n`, `Gathering results for ${cityName}...`);
     const breweryResults = await superagent.get(
       `https://api.openbrewerydb.org/breweries?by_state=${stateSlug}&by_city=${citySlug}&sort=name:asc`
     );
 
     // Get weather data
     const weatherResults = await superagent.get(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=37.8854129&lon=-76.6249557&exclude=minutely,alerts&appid=${APIkey}`
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,alerts&appid=${APIkey}`
     );
 
     console.log(breweryResults.body);
