@@ -1,13 +1,11 @@
 ////////////////////////////////////////////
 // Modules
-const fs = require("fs");
 const inquirer = require("inquirer");
 const superagent = require("superagent");
 const fuzzy = require("fuzzy");
-const stringifyJSON = require("./modules/my-utils/stringifyJSONPro");
 const geography = require("./modules/geography/geography");
 const { states } = require("./data/stateList.json");
-const slugify = require("slugify");
+const breweries = require("./modules/breweries/breweries");
 require("dotenv").config();
 
 ////////////////////////////////////////////
@@ -83,9 +81,9 @@ const init = async function () {
     const APIkey = process.env.API_key;
 
     // Get User Input
-    const state = await getLocationInput(`Select a state:`, states);
-    console.log(`------------------\n`, `Gathering cities in ${state}...`);
-    const cityData = await geography.getTownsAndCities(state);
+    const stateName = await getLocationInput(`Select a state:`, states);
+    console.log(`------------------\n`, `Gathering cities in ${stateName}...`);
+    const cityData = await geography.getTownsAndCities(stateName);
     console.log(`${cityData.size} cities acquired!\n`, `------------------`);
     const cityName = await getLocationInput(`Select a city:`, [
       ...cityData.keys(),
