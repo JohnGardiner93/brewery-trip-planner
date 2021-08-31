@@ -1,10 +1,9 @@
 ////////////////////////////////////////////
 // Modules
-const fs = require("fs");
 const superagent = require("superagent");
-const stringifyJSON = require("../my-utils/stringifyJSONPro");
 const findKeyByValue = require("../my-utils/findKeyByValue");
 const stateCodes = require("./data/stateCodes.json");
+const saveSearchResults = require("../my-utils/saveSearchResults");
 
 ////////////////////////////////////////////
 
@@ -22,7 +21,7 @@ exports.getTownsAndCities = async function (state) {
     const results = await superagent.get(searchURL);
 
     // Save search results for debug. Non-blocking.
-    saveSearchResults(results);
+    saveSearchResults(results.body, `${__dirname}/data/townsAndCities.json`);
 
     // Compile relevant results into array
     const list = await restructureCityInformation(results.body);
@@ -52,26 +51,6 @@ const getStateCode = async function (state) {
     return stateCode;
   } catch (err) {
     throw new Error(`getStateCode: State code not found`);
-  }
-};
-
-/**
- * Saves JSON to file.
- * @async
- * @param {Object[]} results - Response from web page with objects.
- * @returns {Promise<*>} - Promise representing success or failure to write. Returns undefined with successful file write. Returns -1 if file fails to write.
- */
-const saveSearchResults = async function (results) {
-  try {
-    const resultsText = await stringifyJSON(results.body);
-    await fs.promises.writeFile(
-      `${__dirname}/data/townsAndCities.json`,
-      resultsText
-    );
-    return undefined;
-  } catch (err) {
-    console.log(`File failed to write`);
-    return -1;
   }
 };
 
