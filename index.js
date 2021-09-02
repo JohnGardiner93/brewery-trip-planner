@@ -6,7 +6,7 @@ const fuzzy = require("fuzzy");
 const geography = require("./modules/geography/geography");
 const { states } = require("./data/stateList.json");
 const breweries = require("./modules/breweries/breweries");
-require("dotenv").config();
+const weather = require("./modules/weather/weather");
 
 ////////////////////////////////////////////
 // Functions
@@ -100,12 +100,12 @@ const init = async function () {
     );
 
     // Get weather data
-    const weatherResults = await superagent.get(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,alerts&appid=${APIkey}`
+    const weatherResults = await weather.getWeatherAtLocation(
+      latitude,
+      longitude
     );
 
-    console.log(breweryResults.body);
-    console.log(weatherResults.body);
+    console.log(weatherResults);
     // Format brewery data
 
     // Format weather data
