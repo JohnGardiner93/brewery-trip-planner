@@ -8,6 +8,7 @@ const saveSearchResults = require("../my-utils/saveSearchResults");
 
 /**
  * Performs API Call to retrieve the breweries in a town/city from Open-Brewery-DB. Stores search results locally for debug.
+ * @async
  * @param {String} stateName - State of interest.
  * @param {String} cityName - City of interest.
  * @returns {Object[]} - Promise representing list of brewery objects.
