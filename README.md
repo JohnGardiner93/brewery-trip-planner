@@ -18,17 +18,17 @@ This is a project of my own design. The long-term objective is to provide inform
 
 ## 🔴 Description
 
-Part 1 of this project will center around practicing asynchronous JS behavior. It will include API calls and other asynchronous activities using promises. The information gathered in the Part 1 exercise will be used in Part 2 to build dynamic web pages that will be served to the user. This exerceise is designed to practice information from Sections 3-5 of the aforementioned NodeJS course.
+Part 1 of this project centers around practicing asynchronous JS behavior. It includes API calls and other asynchronous activities using promises. The information gathered in the Part 1 exercise will be used in Part 2 to build dynamic web pages that will be served to the user. This exercise was designed to practice information from Sections 3-5 of the aforementioned NodeJS course.
 
-The user will input a city of interest. That information will be used to serve the user with the predicted weather for the next 3 days. It will also be used to give the user a list of breweries in the city they supplied. With this information, the user could make an informed decision regarding which breweries to visit or if they'd like to visit a brewery at all (given the weather)
+The user can input a state of interest. An API is called to retrieve the towns and cities in that state. The user can then select a city/town. That information is then used to serve the user with the predicted weather for the next 5 days. It is also used to give the user a list of breweries in the city they supplied. With this information, the user can make an informed decision regarding which breweries to visit or if they'd like to visit a brewery at all (given the weather)
 
 ## 🔵 Requirements
 
-Call two different API's and feed this information to the user in a palatable manner. Handle errors that may occur. Store the information requested by the user in a format that can be called upon later by the server.
+Call three API's and feed this information to the user in a palatable manner. Handle errors that may occur. Store the information requested by the user in a format that can be called upon later by the server.
 
 ## 🟢 Usage
 
-Run the index.js file to get started. Input the city of your choice into the console. Weather and nearby brewery information will be provided via console output. The information will also be placed into a JSON file.
+Run the index.js file to get started. Input the state then city of your choice into the console. Weather and nearby brewery information will be provided via a generated HTML page (resultsPage.html). The information will also be placed into a JSON file.
 
 # 💻 Part 2: Client-Side Elements
 
