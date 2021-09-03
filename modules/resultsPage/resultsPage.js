@@ -94,8 +94,11 @@ const buildBreweryElements = async function (breweryData) {
  * @returns {String} - Cleaned-up website link
  */
 const generateBreweryWebsiteLink = function (website) {
-  const websiteLink = +website || "";
+  const websiteLink = website || "";
   let result = websiteLink.replace("http://", "").replace("https://", "");
+
+  const lastChar = result.slice(-1);
+  result = lastChar === "/" ? result.slice(0, -1) : result;
   return result;
 };
 
