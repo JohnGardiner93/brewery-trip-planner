@@ -33,6 +33,7 @@ h1 {
 
 h2 {
   margin: 20px 0px 0px 0px;
+  border-bottom: 2px solid black;
 }
 
 /* Container */
@@ -43,10 +44,10 @@ h2 {
   padding: 20px;
   justify-content: center;
   align-items: center;
+  margin-top: 5px;
 }
 
 .container > div {
-  background-color: rgb(237, 245, 237);
   padding: 15px;
   margin: 5px;
   border-radius: 10px;
@@ -56,10 +57,21 @@ h2 {
   font-size: 75%;
 }
 
+.light {
+  /* background-color: rgb(205, 231, 205); */
+  background-color: rgb(191, 230, 191);
+
+  /* background-color: rgb(237, 245, 237); */
+}
+
+.dark {
+  background-color: rgb(177, 233, 177);
+}
+
 /* Weather */
 .weather {
   grid-template-columns: repeat(auto-fit, 200px);
-  width: 90%;
+  width: 85%;
 }
 
 .weather > div {
@@ -77,4 +89,23 @@ h2 {
 
 .breweries > div {
   max-width: 300px;
+}
+
+.breweryCard > a {
+  text-decoration: none;
+  font-style: italic;
+  color: black;
+  font-size: 75%;
+  /* line-height: unset; */
+  display: inline-block;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.breweryCard > a:hover {
+  text-decoration: underline;
+}
+
+.breweryCard > * {
+  margin-bottom: 5px;
 }

@@ -1,12 +1,12 @@
 ////////////////////////////////////////////
 // Modules
 const inquirer = require("inquirer");
-const superagent = require("superagent");
 const fuzzy = require("fuzzy");
 const geography = require("./modules/geography/geography");
 const { states } = require("./data/stateList.json");
 const breweries = require("./modules/breweries/breweries");
 const weather = require("./modules/weather/weather");
+const resultsPage = require("./modules/resultsPage/resultsPage");
 
 ////////////////////////////////////////////
 // Functions
@@ -54,19 +54,6 @@ const searchList = async function (input, inputOptions) {
   }
 };
 
-/*
-const searchList = async function (input, inputOptions) {
-  input = input || "";
-  return new Promise((resolve) => {
-    let results = fuzzy.filter(input, inputOptions);
-    const matches = results.map((el) => {
-      return el.string;
-    });
-    resolve(matches);
-  });
-};
-*/
-
 /**
  * Runs the program.
  */
@@ -78,12 +65,12 @@ const init = async function () {
   );
 
   try {
-    const APIkey = process.env.API_key;
-
     // Get User Input
     const stateName = await getLocationInput(`Select a state:`, states);
+
     console.log(`------------------\n`, `Gathering cities in ${stateName}...`);
     const cityData = await geography.getTownsAndCities(stateName);
+
     console.log(`${cityData.size} cities acquired!\n`, `------------------`);
     const cityName = await getLocationInput(`Select a city:`, [
       ...cityData.keys(),
@@ -91,26 +78,17 @@ const init = async function () {
 
     const { latitude, longitude } = cityData.get(cityName);
 
-    const stateSlug = slugify(state, `_`);
-    const citySlug = slugify(cityName, `_`);
-    // Get brewery data
-    console.log(`------------------\n`, `Gathering results for ${cityName}...`);
-    const breweryResults = await superagent.get(
-      `https://api.openbrewerydb.org/breweries?by_state=${stateSlug}&by_city=${citySlug}&sort=name:asc`
+    const breweryResults = breweries.getBreweriesInCity(stateName, cityName);
+    const weatherResults = weather.getWeatherAtLocation(latitude, longitude);
+    const result = await Promise.all([breweryResults, weatherResults]);
+
+    const pageResults = await resultsPage.buildResultsPage(
+      result[0],
+      result[1],
+      stateName,
+      cityName,
+      `en-US`
     );
-
-    // Get weather data
-    const weatherResults = await weather.getWeatherAtLocation(
-      latitude,
-      longitude
-    );
-
-    console.log(weatherResults);
-    // Format brewery data
-
-    // Format weather data
-    // Store data
-    // Display data to user
   } catch (err) {
     console.log(err.message);
   }
