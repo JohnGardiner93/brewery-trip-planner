@@ -32,9 +32,7 @@ Call three API's and feed this information to the user in a palatable manner. Ha
 Run the index.js file to get started. Input the state then city of your choice into the console. Weather and nearby brewery information will be provided via a generated HTML page (resultsPage.html). The information will also be placed into a JSON file.
 
 ## ✅ Result
-https://user-images.githubusercontent.com/7349117/132079852-9bdd82d2-865e-4449-8a26-ab60cbe6f728.mp4
-
-
+https://user-images.githubusercontent.com/7349117/132092962-aa439a06-0812-4d04-8e9c-7adb0ee79077.mp4
 
 # 💻 Part 2: Client-Side Elements
 
