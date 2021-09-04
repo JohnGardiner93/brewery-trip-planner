@@ -10,7 +10,7 @@ This is a project of my own design. The long-term objective is to provide inform
   - [Description](#-description)
   - [Requirements](#-requirements)
   - [Usage](#-usage)
-  - [Result](#-result
+  - [Result](#-result)
 - [Part 2](#-part-2-client-side-elements)
 - [Part 3](#-part-3-itinerary-planning)
 - [Installation](#-installation)
@@ -32,7 +32,9 @@ Call three API's and feed this information to the user in a palatable manner. Ha
 Run the index.js file to get started. Input the state then city of your choice into the console. Weather and nearby brewery information will be provided via a generated HTML page (resultsPage.html). The information will also be placed into a JSON file.
 
 ## ✅ Result
-https://user-images.githubusercontent.com/7349117/131990045-810b4305-0820-42e3-9095-0ddc965e43ec.mp4
+https://user-images.githubusercontent.com/7349117/132079852-9bdd82d2-865e-4449-8a26-ab60cbe6f728.mp4
+
+
 
 # 💻 Part 2: Client-Side Elements
 
