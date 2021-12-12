@@ -2,3 +2,6 @@ node_modules
 .parcel-cache
 dist
 .env
+townsAndCities*.json
+townsAndCities.json
+resultsPage.html

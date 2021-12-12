@@ -16,10 +16,8 @@ const saveSearchResults = require("../my-utils/saveSearchResults");
 exports.getTownsAndCities = async function (state) {
   try {
     // Search
-    const stateCode = await getStateCode(state);
-    const searchURL = `https://public.opendatasoft.com/api/v2/catalog/datasets/cities-and-towns-of-the-united-states/exports/json?select=include(name)%2C%20include(state)%2C%20include(longitude)%2C%20include(latitude)%2C%20include(county)&order_by=name%20asc&limit=-1&refine=state%3A${stateCode}&pretty=false&timezone=UTC`;
+    const searchURL = `https://public.opendatasoft.com/api/v2/catalog/datasets/georef-united-states-of-america-place-millesime/exports/json?select=pla_name%2C%20ste_name%2C%20geo_point_2d%2C%20coty_name&order_by=pla_name%20asc&limit=-1&offset=0&refine=ste_name%3A${state}&lang=en&timezone=UTC`;
     const results = await superagent.get(searchURL);
-
     // Save search results for debug. Non-blocking.
     saveSearchResults(results.body, `${__dirname}/data/townsAndCities.json`);
 
@@ -28,29 +26,8 @@ exports.getTownsAndCities = async function (state) {
     return list;
   } catch (err) {
     throw new Error(
-      `🏫 There was an error in geography.getTownsAndCities:\n >> ${err.message}`
+      `🏫 There was an error in geography.getTownsAndCities:\n >> ${err}`
     );
-  }
-};
-
-/**
- * Retrieves the state code of the provided state. If a valid state code is provided, returns provided value.
- * @async
- * @param {String} state
- * @returns {Promise<String>}
- */
-const getStateCode = async function (state) {
-  try {
-    const location = state.toUpperCase().trim();
-    // If state provided is already a valid state code
-    if (location in stateCodes) return location;
-
-    const stateCode = await findKeyByValue(stateCodes, location, {
-      uppercase: true,
-    });
-    return stateCode;
-  } catch (err) {
-    throw new Error(`getStateCode: State code not found`);
   }
 };
 
@@ -66,13 +43,13 @@ const restructureCityInformation = async function (apiCallResults) {
     apiCallResults.forEach((city) => {
       // console.log(city);
       const newObj = {};
-      newObj["county"] = city?.county;
-      newObj["longitude"] = city?.longitude;
-      newObj["latitude"] = city?.latitude;
+      newObj["county"] = city?.coty_name[0];
+      newObj["longitude"] = city?.geo_point_2d.lon;
+      newObj["latitude"] = city?.geo_point_2d.lat;
 
-      if (!city.name)
+      if (!city?.pla_name[0])
         throw new Error(`🏙 City Name does not exist. Data format incorrect.`);
-      results.set(city?.name, newObj);
+      results.set(city?.pla_name[0], newObj);
     });
     return results;
   } catch (err) {
